@@ -2,72 +2,50 @@ from evdev import InputDevice
 from ButtonCodes import x360
 from RetroControllers import MdPad
 
-xboxPad1 = InputDevice('/dev/input/event2')
-    
+xboxPad1 = InputDevice('/dev/input/event2')    
 mdPad1 = MdPad()
 
-#################D-PAD###########################
-for event in xboxPad1.read_loop():
+def readDirBtn(btn,dirA,dirB):
     #left/right d-pad, -1 means left, 1 means right
-    if event.code == x360.leftRight:
+    if event.code == btn:
         if event.value == -1:
-            print("left")#debug
-            mdPad1.left = True
-            mdPad1.right = False
+            print(dirA)#debug
+            mdPad1.dirA = True
+            mdPad1.dirB = False
         elif event.value == 1:
-            print("right")#debug
-            mdPad1.left = False
-            mdPad1.right = True
+            print(dirB)#debug
+            mdPad1.dirA = False
+            mdPad1.dirB = True
         elif event.value == 00:
             print("center")#debug
-            mdPad1.left = False
-            mdPad1.right = False
+            mdPad1.dirA = False
+            mdPad1.dirB = False
         else:
-            print("Unrecognized L/R D-pad value:",event.value)
+            print("Unrecognized D-pad value:",event.value)
         print(mdPad1)
+        
+def readPushBtn(inBtn,outBtn):
+    if event.code == inBtn:
+        if event.value == True:
+            print(outBtn)#debug
+            mdPad1.outBtn = True
+        else:
+            mdPad1.outBtn = False
+        print(mdPad1)#debug
 
-    #up/down d-pad, -1 means up, 1 means down
-    if event.code == x360.upDown:
-        if event.value == -1:
-            print("up")#debug
-            mdPad1.up = True
-            mdPad1.down = False
-        elif event.value == 1:
-            print("down")#debug
-            mdPad1.up = False
-            mdPad1.down = True
-        elif event.value == 00:
-            print("level")#debug
-            mdPad1.up = False
-            mdPad1.down = False
-        else:
-            print("Unrecognized D/U D-pad value:",event.value)
-        print(mdPad1)
+#################MAIN###########################
+for event in xboxPad1.read_loop():
     
-###########BUTTONS###############
-    #x -> a button, 01 is pressed, 00 is released
-    if event.code == x360.xBtn:
-        if event.value == True:
-            print("a")#debug
-            mdPad1.a = True
-        else:
-            mdPad1.a = False
-        print(mdPad1)
-        
-    #a -> b button, 01 is pressed, 00 is released
-    if event.code == x360.aBtn:
-        if event.value == True:
-            print("b")#debug
-            mdPad1.b = True
-        else:
-            mdPad1.b = False
-        print(mdPad1)
-        
-    #b -> c button, 01 is pressed, 00 is released
-    if event.code == x360.bBtn:
-        if event.value == True:
-            print("c")#debug
-            mdPad1.c = True
-        else:
-            mdPad1.c = False
-        print(mdPad1)
+    #read D-pad
+    readDirBtn(x360.leftRight,"left","right")
+    readDirBtn(x360.upDown,"up","down")
+    
+    #read Buttons
+    readPushBtn(x360.x,'a')
+    readPushBtn(x360.a,'b')
+    readPushBtn(x360.b,'c')
+    readPushBtn(x360.lb, 'x')
+    readPushBtn(x360.rb, 'y')
+    readPushBtn(x360.y, 'z')
+    readPushBtn(x360.start, 'start')
+
