@@ -1,6 +1,8 @@
 from evdev import InputDevice
 from ButtonCodes import x360
 from RetroControllers import MdPad
+import _thread
+import time #debug
     
 mdPad1 = MdPad()
 
@@ -26,7 +28,6 @@ def read_ctrl_input():
                 mdPad1.right = False
             else:
                 print("Unrecognized L/R D-pad value:",event.value)
-            print(mdPad1)
 
         #up/down d-pad, -1 means up, 1 means down
         if event.code == x360.upDown:
@@ -44,7 +45,6 @@ def read_ctrl_input():
                 mdPad1.down = False
             else:
                 print("Unrecognized D/U D-pad value:",event.value)
-            print(mdPad1)
 
     ###########BUTTONS###############
         #x -> a button, 01 is pressed, 00 is released
@@ -54,7 +54,6 @@ def read_ctrl_input():
                 mdPad1.a = True
             else:
                 mdPad1.a = False
-            print(mdPad1)
 
         #a -> b button, 01 is pressed, 00 is released
         if event.code == x360.a:
@@ -63,7 +62,6 @@ def read_ctrl_input():
                 mdPad1.b = True
             else:
                 mdPad1.b = False
-            print(mdPad1)
 
         #b -> c button, 01 is pressed, 00 is released
         if event.code == x360.b:
@@ -72,7 +70,6 @@ def read_ctrl_input():
                 mdPad1.c = True
             else:
                 mdPad1.c = False
-            print(mdPad1)
 
         #start -> c button, 01 is pressed, 00 is released
         if event.code == x360.start:
@@ -81,5 +78,12 @@ def read_ctrl_input():
                 mdPad1.start = True
             else:
                 mdPad1.start = False
-            print(mdPad1)
+            
+def write_ctrl_output():
+    while True:
+        print(mdPad1)
+        time.sleep(1)
 
+########MAIN#########
+_thread.start_new_thread(read_ctrl_input, ())
+_thread.start_new_thread(write_ctrl_output, ())
