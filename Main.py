@@ -46,7 +46,7 @@ for event in xboxPad1.read_loop():
     
 ###########BUTTONS###############
     #x -> a button, 01 is pressed, 00 is released
-    if event.code == x360.xBtn:
+    if event.code == x360.x:
         if event.value == True:
             print("a")#debug
             mdPad1.a = True
@@ -55,7 +55,7 @@ for event in xboxPad1.read_loop():
         print(mdPad1)
         
     #a -> b button, 01 is pressed, 00 is released
-    if event.code == x360.aBtn:
+    if event.code == x360.a:
         if event.value == True:
             print("b")#debug
             mdPad1.b = True
@@ -64,10 +64,19 @@ for event in xboxPad1.read_loop():
         print(mdPad1)
         
     #b -> c button, 01 is pressed, 00 is released
-    if event.code == x360.bBtn:
+    if event.code == x360.b:
         if event.value == True:
             print("c")#debug
             mdPad1.c = True
         else:
             mdPad1.c = False
+        print(mdPad1)
+
+    #start -> c button, 01 is pressed, 00 is released
+    if event.code == x360.start:
+        if event.value == True:
+            print("c")#debug
+            mdPad1.start = True
+        else:
+            mdPad1.start = False
         print(mdPad1)

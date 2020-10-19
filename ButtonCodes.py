@@ -3,11 +3,11 @@ class x360:
     leftRight = 16
     upDown = 17
 
-    aBtn = 304
-    bBtn = 305
-    xBtn = 307
-    yBtn = 308
-    lBmp = 310
-    rBmp = 311
-    backBtn = 314
-    startBtn = 315
+    a = 304
+    b = 305
+    x = 307
+    y = 308
+    lb = 310
+    rb = 311
+    back = 314
+    start = 315
