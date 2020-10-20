@@ -95,39 +95,39 @@ def write_ctrl_output():
     GPIO.setup(13, GPIO.OUT)
     GPIO.setup(15, GPIO.OUT)
     GPIO.setup(18, GPIO.OUT)
-    GPIO.setup(23, GPIO.IN) #select pin is only input
+    GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #select pin is only input
     
     while True:
     
         if mdPad1.up:
-            GPIO.output(7, GPIO.HIGH)
+            GPIO.output(7, GPIO.LOW)
             print("up out")
         else:
-            GPIO.output(7, GPIO.LOW)
+            GPIO.output(7, GPIO.HIGH)
         
         if mdPad1.down:
-            GPIO.output(11, GPIO.HIGH)
+            GPIO.output(11, GPIO.LOW)
             print("down out")
         else:
-            GPIO.output(11, GPIO.LOW)
+            GPIO.output(11, GPIO.HIGH)
         
         if mdPad1.left:
-            GPIO.output(12, GPIO.HIGH)
+            GPIO.output(12, GPIO.LOW)
             print("left out")
         else:
-            GPIO.output(12, GPIO.LOW)
+            GPIO.output(12, GPIO.HIGH)
         
         if mdPad1.right:
-            GPIO.output(13, GPIO.HIGH)
+            GPIO.output(13, GPIO.LOW)
             print("right out")
         else:
-            GPIO.output(13, GPIO.LOW)
+            GPIO.output(13, GPIO.HIGH)
         
         if mdPad1.b:
-            GPIO.output(15, GPIO.HIGH)
+            GPIO.output(15, GPIO.LOW)
             print("b out")
         else:
-            GPIO.output(15, GPIO.LOW)
+            GPIO.output(15, GPIO.HIGH)
 
 ########MAIN#########
 _thread.start_new_thread(read_ctrl_input, ())
