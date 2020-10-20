@@ -2,7 +2,13 @@ from evdev import InputDevice
 from ButtonCodes import x360
 from RetroControllers import MdPad
 import _thread
-import time #debug
+
+try:
+    import RPi.GPIO as GPIO
+except RuntimeError:
+    print("Error importing RPi.GPIO!")
+GPIO.setmode(GPIO.BOARD)
+GPIO.cleanup()
     
 mdPad1 = MdPad()
 
@@ -80,9 +86,48 @@ def read_ctrl_input():
                 mdPad1.start = False
             
 def write_ctrl_output():
+    
+    #input_list = [7,11,12,13,15,18]
+    #for pin in range(0,6):
+    GPIO.setup(7, GPIO.OUT)
+    GPIO.setup(11, GPIO.OUT)
+    GPIO.setup(12, GPIO.OUT)
+    GPIO.setup(13, GPIO.OUT)
+    GPIO.setup(15, GPIO.OUT)
+    GPIO.setup(18, GPIO.OUT)
+    GPIO.setup(23, GPIO.IN) #select pin is only input
+    
     while True:
-        print(mdPad1)
-        time.sleep(1)
+    
+        if mdPad1.up:
+            GPIO.output(7, GPIO.HIGH)
+            print("up out")
+        else:
+            GPIO.output(7, GPIO.LOW)
+        
+        if mdPad1.down:
+            GPIO.output(11, GPIO.HIGH)
+            print("down out")
+        else:
+            GPIO.output(11, GPIO.LOW)
+        
+        if mdPad1.left:
+            GPIO.output(12, GPIO.HIGH)
+            print("left out")
+        else:
+            GPIO.output(12, GPIO.LOW)
+        
+        if mdPad1.right:
+            GPIO.output(13, GPIO.HIGH)
+            print("right out")
+        else:
+            GPIO.output(13, GPIO.LOW)
+        
+        if mdPad1.b:
+            GPIO.output(15, GPIO.HIGH)
+            print("b out")
+        else:
+            GPIO.output(15, GPIO.LOW)
 
 ########MAIN#########
 _thread.start_new_thread(read_ctrl_input, ())
