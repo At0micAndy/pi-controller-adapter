@@ -13,7 +13,12 @@ GPIO.cleanup()
 mdPad1 = MdPad()
 
 def read_ctrl_input():
-    xboxPad1 = InputDevice('/dev/input/event2')
+    try:
+        xboxPad1 = InputDevice('/dev/input/event2')
+    except:
+        print("No controller")
+        return
+        
     global mdPad1
 
     #################D-PAD###########################
@@ -131,4 +136,4 @@ def write_ctrl_output():
 
 ########MAIN#########
 _thread.start_new_thread(read_ctrl_input, ())
-_thread.start_new_thread(write_ctrl_output, ())
+write_ctrl_output()

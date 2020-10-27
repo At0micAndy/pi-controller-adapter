@@ -50,8 +50,10 @@ def write_virtual_pin_handler(pin, value):
 def write_virtual_pin_handler(pin, value):
     if value == ['1']:
         GPIO.output(right, GPIO.LOW)
+        GPIO.output(left, GPIO.HIGH)
     elif value == ['-1']:
         GPIO.output(left, GPIO.LOW)
+        GPIO.output(right, GPIO.HIGH)
     else:
         GPIO.output(right, GPIO.HIGH)
         GPIO.output(left, GPIO.HIGH)
