@@ -150,42 +150,80 @@ def write_ctrl_output():
     GPIO.setup(MdPad.cStart, GPIO.OUT)
     
     while True:
-    
-        if mdPad1.up:
-            GPIO.output(MdPad.upZ, GPIO.LOW)
-            print("up out")
+
+        if GPIO.input(MdPad.select):
+            if mdPad1.up:
+                GPIO.output(MdPad.upZ, GPIO.LOW)
+                print("up out")
+            else:
+                GPIO.output(MdPad.upZ, GPIO.HIGH)
+
+            if mdPad1.down:
+                GPIO.output(MdPad.downY, GPIO.LOW)
+                print("down out")
+            else:
+                GPIO.output(MdPad.downY, GPIO.HIGH)
+
+            if mdPad1.left:
+                GPIO.output(MdPad.leftX, GPIO.LOW)
+                print("left out")
+            else:
+                GPIO.output(MdPad.leftX, GPIO.HIGH)
+
+            if mdPad1.right:
+                GPIO.output(MdPad.rightMode, GPIO.LOW)
+                print("right out")
+            else:
+                GPIO.output(MdPad.rightMode, GPIO.HIGH)
+
+            if mdPad1.b:
+                GPIO.output(MdPad.bA, GPIO.LOW)
+                print("b out")
+            else:
+                GPIO.output(MdPad.bA, GPIO.HIGH)
+
+            if mdPad1.start:
+                GPIO.output(MdPad.cStart, GPIO.LOW)
+                print("b out")
+            else:
+                GPIO.output(MdPad.cStart, GPIO.HIGH)
+
         else:
-            GPIO.output(MdPad.upZ, GPIO.HIGH)
-        
-        if mdPad1.down:
-            GPIO.output(MdPad.downY, GPIO.LOW)
-            print("down out")
-        else:
-            GPIO.output(MdPad.downY, GPIO.HIGH)
-        
-        if mdPad1.left:
-            GPIO.output(MdPad.leftX, GPIO.LOW)
-            print("left out")
-        else:
-            GPIO.output(MdPad.leftX, GPIO.HIGH)
-        
-        if mdPad1.right:
-            GPIO.output(MdPad.rightMode, GPIO.LOW)
-            print("right out")
-        else:
-            GPIO.output(MdPad.rightMode, GPIO.HIGH)
-        
-        if mdPad1.b:
-            GPIO.output(MdPad.bA, GPIO.LOW)
-            print("b out")
-        else:
-            GPIO.output(MdPad.bA, GPIO.HIGH)
-            
-        if mdPad1.start:
-            GPIO.output(MdPad.cStart, GPIO.LOW)
-            print("b out")
-        else:
-            GPIO.output(MdPad.cStart, GPIO.HIGH)
+            if mdPad1.up:
+                GPIO.output(MdPad.upZ, GPIO.LOW)
+                print("up out")
+            else:
+                GPIO.output(MdPad.upZ, GPIO.HIGH)
+
+            if mdPad1.down:
+                GPIO.output(MdPad.downY, GPIO.LOW)
+                print("down out")
+            else:
+                GPIO.output(MdPad.downY, GPIO.HIGH)
+
+            if mdPad1.left:
+                GPIO.output(MdPad.leftX, GPIO.LOW)
+                print("left out")
+            else:
+                GPIO.output(MdPad.leftX, GPIO.HIGH)
+
+            if mdPad1.right:
+                GPIO.output(MdPad.rightMode, GPIO.LOW)
+                print("right out")
+            else:
+                GPIO.output(MdPad.rightMode, GPIO.HIGH)
+
+            if mdPad1.b:
+                GPIO.output(MdPad.bA, GPIO.LOW)
+                print("b out")
+            else:
+                GPIO.output(MdPad.bA, GPIO.HIGH)
+
+            if mdPad1.start:
+                GPIO.output(MdPad.cStart, GPIO.LOW)
+                print("b out")
+            else:
+                GPIO.output(MdPad.cStart, GPIO.HIGH)
 
 ########MAIN#########
 if path.exists('/dev/input/event2'):
