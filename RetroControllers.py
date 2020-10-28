@@ -11,7 +11,7 @@ class MdPad:
         self.a = self.b = self.c = False
         self.x = self.y = self.z = False
         self.up = self.down = self.left = self.right = False
-        self.start = False
+        self.start = self.mode = False
         
     def __str__(self):
         return  "Button states: a:% s b:% s c:% s x:% s y:% s z:% "\

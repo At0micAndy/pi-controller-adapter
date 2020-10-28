@@ -21,41 +21,32 @@ mdPad1 = MdPad()
 
 def read_ctrl_input():
     
+    print("Controller Mode")
     xboxPad1 = InputDevice('/dev/input/event2')
         
     global mdPad1
 
     #################D-PAD###########################
     for event in xboxPad1.read_loop():
-        #left/right d-pad, -1 means left, 1 means right
         if event.code == x360.leftRight:
             if event.value == -1:
-                print("left")#debug
                 mdPad1.left = True
                 mdPad1.right = False
             elif event.value == 1:
-                print("right")#debug
                 mdPad1.left = False
                 mdPad1.right = True
             elif event.value == 00:
-                print("center")#debug
                 mdPad1.left = False
                 mdPad1.right = False
-            else:
-                print("Unrecognized L/R D-pad value:",event.value)
-
-        #up/down d-pad, -1 means up, 1 means down
+                
         if event.code == x360.upDown:
             if event.value == -1:
-                print("up")#debug
                 mdPad1.up = True
                 mdPad1.down = False
             elif event.value == 1:
-                print("down")#debug
                 mdPad1.up = False
                 mdPad1.down = True
             elif event.value == 00:
-                print("level")#debug
                 mdPad1.up = False
                 mdPad1.down = False
             else:
@@ -98,6 +89,7 @@ blynk = blynklib.Blynk(BLYNK_AUTH)
 WRITE_EVENT_PRINT_MSG = "[WRITE_VIRTUAL_PIN_EVENT] Pin: V{} Value: '{}'"
 
 def run_blink():
+    print("No controller detected, Bluetooth Mode")
     while True:
         blynk.run()
 
@@ -151,77 +143,67 @@ def write_ctrl_output():
     
     while True:
 
-        if GPIO.input(MdPad.select):
+        if True: #GPIO.input(MdPad.select): feature not currently working
+            #print("select=1")
             if mdPad1.up:
                 GPIO.output(MdPad.upZ, GPIO.LOW)
-                print("up out")
             else:
                 GPIO.output(MdPad.upZ, GPIO.HIGH)
 
             if mdPad1.down:
                 GPIO.output(MdPad.downY, GPIO.LOW)
-                print("down out")
             else:
                 GPIO.output(MdPad.downY, GPIO.HIGH)
 
             if mdPad1.left:
                 GPIO.output(MdPad.leftX, GPIO.LOW)
-                print("left out")
             else:
                 GPIO.output(MdPad.leftX, GPIO.HIGH)
 
             if mdPad1.right:
                 GPIO.output(MdPad.rightMode, GPIO.LOW)
-                print("right out")
             else:
                 GPIO.output(MdPad.rightMode, GPIO.HIGH)
 
             if mdPad1.b:
                 GPIO.output(MdPad.bA, GPIO.LOW)
-                print("b out")
             else:
                 GPIO.output(MdPad.bA, GPIO.HIGH)
 
             if mdPad1.start:
                 GPIO.output(MdPad.cStart, GPIO.LOW)
-                print("b out")
             else:
                 GPIO.output(MdPad.cStart, GPIO.HIGH)
 
         else:
-            if mdPad1.up:
+            print("select = 0")
+            if mdPad1.z:
                 GPIO.output(MdPad.upZ, GPIO.LOW)
-                print("up out")
             else:
                 GPIO.output(MdPad.upZ, GPIO.HIGH)
 
-            if mdPad1.down:
+            if mdPad1.y:
                 GPIO.output(MdPad.downY, GPIO.LOW)
-                print("down out")
             else:
                 GPIO.output(MdPad.downY, GPIO.HIGH)
 
-            if mdPad1.left:
+            if mdPad1.x:
                 GPIO.output(MdPad.leftX, GPIO.LOW)
-                print("left out")
             else:
                 GPIO.output(MdPad.leftX, GPIO.HIGH)
 
-            if mdPad1.right:
+            if mdPad1.mode:
                 GPIO.output(MdPad.rightMode, GPIO.LOW)
-                print("right out")
             else:
                 GPIO.output(MdPad.rightMode, GPIO.HIGH)
 
-            if mdPad1.b:
+            if mdPad1.a:
                 GPIO.output(MdPad.bA, GPIO.LOW)
-                print("b out")
             else:
                 GPIO.output(MdPad.bA, GPIO.HIGH)
 
-            if mdPad1.start:
+            if mdPad1.c:
                 GPIO.output(MdPad.cStart, GPIO.LOW)
-                print("b out")
             else:
                 GPIO.output(MdPad.cStart, GPIO.HIGH)
 
