@@ -13,6 +13,7 @@ from os import path
 #for outputing signals
 import RPi.GPIO as GPIO
 GPIO.setmode(GPIO.BOARD)
+GPIO.setwarnings(False)
 
 #for holding button values
 from RetroControllers import MdPad
@@ -88,7 +89,8 @@ def read_ctrl_input():
                 mdPad1.start = True
             else:
                 mdPad1.start = False
-                
+ 
+######################Handles Comms with Blynk app############
 BLYNK_AUTH = 'edY5cMITGVUTFU8xOpZEznjcsGxHiiwd'
 
 blynk = blynklib.Blynk(BLYNK_AUTH)
@@ -139,47 +141,51 @@ def write_virtual_pin_handler(pin, value):
             
 def write_ctrl_output():
     
-    #input_list = [7,11,12,13,15,18]
-    #for pin in range(0,6):
-    GPIO.setup(7, GPIO.OUT)
-    GPIO.setup(11, GPIO.OUT)
-    GPIO.setup(12, GPIO.OUT)
-    GPIO.setup(13, GPIO.OUT)
-    GPIO.setup(15, GPIO.OUT)
-    GPIO.setup(18, GPIO.OUT)
-    GPIO.setup(23, GPIO.IN, pull_up_down=GPIO.PUD_DOWN) #select pin is only input
+    GPIO.setup(MdPad.upZ, GPIO.OUT)
+    GPIO.setup(MdPad.downY, GPIO.OUT)
+    GPIO.setup(MdPad.leftX, GPIO.OUT)
+    GPIO.setup(MdPad.rightMode, GPIO.OUT)
+    GPIO.setup(MdPad.bA, GPIO.OUT)
+    GPIO.setup(MdPad.select, GPIO.IN, pull_up_down=GPIO.PUD_DOWN)
+    GPIO.setup(MdPad.cStart, GPIO.OUT)
     
     while True:
     
         if mdPad1.up:
-            GPIO.output(7, GPIO.LOW)
+            GPIO.output(MdPad.upZ, GPIO.LOW)
             print("up out")
         else:
-            GPIO.output(7, GPIO.HIGH)
+            GPIO.output(MdPad.upZ, GPIO.HIGH)
         
         if mdPad1.down:
-            GPIO.output(11, GPIO.LOW)
+            GPIO.output(MdPad.downY, GPIO.LOW)
             print("down out")
         else:
-            GPIO.output(11, GPIO.HIGH)
+            GPIO.output(MdPad.downY, GPIO.HIGH)
         
         if mdPad1.left:
-            GPIO.output(12, GPIO.LOW)
+            GPIO.output(MdPad.leftX, GPIO.LOW)
             print("left out")
         else:
-            GPIO.output(12, GPIO.HIGH)
+            GPIO.output(MdPad.leftX, GPIO.HIGH)
         
         if mdPad1.right:
-            GPIO.output(13, GPIO.LOW)
+            GPIO.output(MdPad.rightMode, GPIO.LOW)
             print("right out")
         else:
-            GPIO.output(13, GPIO.HIGH)
+            GPIO.output(MdPad.rightMode, GPIO.HIGH)
         
         if mdPad1.b:
-            GPIO.output(15, GPIO.LOW)
+            GPIO.output(MdPad.bA, GPIO.LOW)
             print("b out")
         else:
-            GPIO.output(15, GPIO.HIGH)
+            GPIO.output(MdPad.bA, GPIO.HIGH)
+            
+        if mdPad1.start:
+            GPIO.output(MdPad.cStart, GPIO.LOW)
+            print("b out")
+        else:
+            GPIO.output(MdPad.cStart, GPIO.HIGH)
 
 ########MAIN#########
 if path.exists('/dev/input/event2'):

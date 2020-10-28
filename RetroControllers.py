@@ -1,4 +1,12 @@
 class MdPad:
+    upZ = 7
+    downY = 11
+    leftX = 12
+    rightMode = 13
+    bA = 15
+    select = 16
+    cStart = 18
+    
     def __init__(self):
         self.a = self.b = self.c = False
         self.x = self.y = self.z = False
