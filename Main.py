@@ -80,56 +80,53 @@ def read_ctrl_input():
                 mdPad1.start = True
             else:
                 mdPad1.start = False
- 
-######################Handles Comms with Blynk app############
-BLYNK_AUTH = 'edY5cMITGVUTFU8xOpZEznjcsGxHiiwd'
-
-blynk = blynklib.Blynk(BLYNK_AUTH)
-
-WRITE_EVENT_PRINT_MSG = "[WRITE_VIRTUAL_PIN_EVENT] Pin: V{} Value: '{}'"
 
 def run_blink():
-    print("No controller detected, Bluetooth Mode")
+    print("No controller detected, Network Mode")
+    BLYNK_AUTH = 'edY5cMITGVUTFU8xOpZEznjcsGxHiiwd'
+    blynk = blynklib.Blynk(BLYNK_AUTH)
+    WRITE_EVENT_PRINT_MSG = "[WRITE_VIRTUAL_PIN_EVENT] Pin: V{} Value: '{}'"
+    
+    @blynk.handle_event('write V7')
+    def write_virtual_pin_handler(pin, value):
+        if value == ['1']:
+            mdPad1.start = True
+        else:
+            mdPad1.start = False
+
+    @blynk.handle_event('write V5')
+    def write_virtual_pin_handler(pin, value):
+        if value == ['1']:
+            mdPad1.b = True
+        else:
+            mdPad1.b = False
+        
+    @blynk.handle_event('write V3')
+    def write_virtual_pin_handler(pin, value):
+        if value == ['-1']:
+            mdPad1.right = True
+            mdPad1.left = False
+        elif value == ['1']:
+            mdPad1.left = True
+            mdPad1.right = False
+        else:
+            mdPad1.left = False
+            mdPad1.right = False
+        
+    @blynk.handle_event('write V1')
+    def write_virtual_pin_handler(pin, value):
+        if value == ['-1']:
+            mdPad1.down = True
+            mdPad1.up = False
+        elif value == ['1']:
+            mdPad1.up = True
+            mdPad1.down = False
+        else:
+            mdPad1.up = False
+            mdPad1.down = False
+    
     while True:
         blynk.run()
-
-@blynk.handle_event('write V7')
-def write_virtual_pin_handler(pin, value):
-    if value == ['1']:
-        mdPad1.start = True
-    else:
-        mdPad1.start = False
-
-@blynk.handle_event('write V5')
-def write_virtual_pin_handler(pin, value):
-    if value == ['1']:
-        mdPad1.b = True
-    else:
-        mdPad1.b = False
-        
-@blynk.handle_event('write V3')
-def write_virtual_pin_handler(pin, value):
-    if value == ['-1']:
-        mdPad1.right = True
-        mdPad1.left = False
-    elif value == ['1']:
-        mdPad1.left = True
-        mdPad1.right = False
-    else:
-        mdPad1.left = False
-        mdPad1.right = False
-        
-@blynk.handle_event('write V1')
-def write_virtual_pin_handler(pin, value):
-    if value == ['-1']:
-        mdPad1.down = True
-        mdPad1.up = False
-    elif value == ['1']:
-        mdPad1.up = True
-        mdPad1.down = False
-    else:
-        mdPad1.up = False
-        mdPad1.down = False
             
 def write_ctrl_output():
     
@@ -214,3 +211,4 @@ else:
     _thread.start_new_thread(run_blink, ())
     
 write_ctrl_output()
+print("Exit")

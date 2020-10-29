@@ -1,0 +1,21 @@
+[Unit]
+
+Description=launches controller adapter script
+
+After=network-online.target
+
+[Service] ExecStart=/usr/pi-controller-adapter/python3 -u main.py
+
+WorkingDirectory=/usr/pi-controller-adapter
+
+StandardOutput=inherit
+
+StandardError=inherit
+
+Restart=always
+
+User=pi
+
+[Install]
+
+WantedBy=multi-user.target
